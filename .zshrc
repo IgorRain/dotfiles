@@ -32,11 +32,7 @@ fi
 # Dockertex stuff
 # ============================================================
 
-if [ $(uname -m) = "arm64" ]; then
-  export DOCKERTEX_DEFAULT_TAG="arm64-texlive2018"
-else
-  export DOCKERTEX_DEFAULT_TAG="texlive2018"
-fi
+export DOCKERTEX_DEFAULT_TAG="texlive2022"
 export DOCKERTEX_ENGINE="docker"
 
 # ============================================================
@@ -69,6 +65,13 @@ then
 fi
 
 # ============================================================
+# NodeJS stuff
+# ============================================================
+
+export NODE_COMPILE_CACHE=~/.cache/nodejs-compole-cache
+export NODE_OPTIONS=--dns-result-order=ipv4first
+
+# ============================================================
 # Plugin stuff
 # ============================================================
 
@@ -85,7 +88,6 @@ zplug "lib/directories", from:oh-my-zsh
 zplug "lib/functions", from:oh-my-zsh
 zplug "lib/history",   from:oh-my-zsh
 zplug "plugins/git",   from:oh-my-zsh
-zplug "plugins/history",   from:oh-my-zsh
 zplug "plugins/virtualenv",   from:oh-my-zsh
 zplug "greymd/docker-zsh-completion"
 zplug "zsh-users/zsh-autosuggestions"
@@ -108,6 +110,7 @@ zplug load
 # ============================================================
 
 unsetopt autocd
+unsetopt share_history
 
 # ============================================================
 # Keybindings
@@ -135,8 +138,6 @@ alias -g ltt=' eza --tree -D -L 3 -I ${TREE_IGNORE}'
 alias -g lttt=' eza --tree -D -L 4 -I ${TREE_IGNORE}'
 alias -g ltttt=' eza --tree -D -L 5 -I ${TREE_IGNORE}'
 
-alias hg="history | grep"
-
 alias lg="lazygit"
 
 # conditional aliases
@@ -147,11 +148,13 @@ fi
 # ============================================================
 # Init starship
 # ============================================================
+
 eval "$(starship init zsh)"
 
 # ============================================================
 # Init fzf
 # ============================================================
+
 eval "$(fzf --zsh)"
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
@@ -174,10 +177,24 @@ _fzf_comprun() {
   shift
 
   case "$command" in
-    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    cd|z)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
     export|unset) fzf --preview "eval 'echo $'{}"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                   "$@" ;;
     *)            fzf --preview "bat -n --color=always --line-range :500 {}" "$@" ;;
   esac
 }
+
+# ============================================================
+# Init zoxide
+# ============================================================
+
+eval "$(zoxide init zsh)"
+
+# ============================================================
+# Init carapace
+# ============================================================
+
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+source <(carapace _carapace)
 
