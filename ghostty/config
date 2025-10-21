@@ -1,4 +1,3 @@
-font-family = Mononoki Nerd Font
-# font-family = MesloLGS Nerd Font Mono
-font-size = 14.5
-theme = rose-pine-moon
+font-family = MesloLGS Nerd Font Mono
+font-size = 14
+theme = citruszest
