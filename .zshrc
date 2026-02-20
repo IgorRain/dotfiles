@@ -11,13 +11,16 @@ path+=(~/.yarn/bin)
 
 if [[ $(uname) == "Linux" ]] && [ -d "/home/linuxbrew" ]; then
   path+=(/home/linuxbrew/.linuxbrew/bin)
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+if [ -d "$HOME/.cargo" ] && [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+else 
+  path+=(~/.cargo/bin)
 fi
 
 export PATH
-
-if [ -d "$HOME/.cargo" ]; then
-  source "$HOME/.cargo/env"
-fi
 
 # ============================================================
 # MacOS Specific 
