@@ -22,7 +22,9 @@ disabled = false
 
 [os.symbols]
 Arch = "󰣇"
-Linux = ""
+Debian = "󰣚"
+EndeavourOS = ""
+Linux = ""
 Macos = ""
 Ubuntu = ""
 Windows = ""
