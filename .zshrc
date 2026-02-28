@@ -29,6 +29,8 @@ export PATH
 if [[ $(uname) == "Darwin" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
   source ~/.orbstack/shell/init.zsh 2>/dev/null || : 
+  export SDKROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk
+  export CPLUS_INCLUDE_PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1
 fi
 
 # ============================================================
