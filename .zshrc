@@ -209,3 +209,10 @@ export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
 zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
 source <(carapace _carapace)
 
+# ============================================================
+# Init worktrunk
+# ============================================================
+
+if command -v wt >/dev/null 2>&1; then
+  eval "$(command wt config shell init zsh)";
+fi
